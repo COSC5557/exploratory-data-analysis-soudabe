@@ -1,25 +1,22 @@
+import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn.preprocessing import MinMaxScaler
 
 if __name__ == "__main__":
     data_frame = pd.read_csv("winequality-white.csv", sep=";")
     print(data_frame.columns)
 
-    selected_features = ['fixed acidity', 'free sulfur dioxide', 'total sulfur dioxide']
+    features = data_frame.drop('quality', axis=1).columns.tolist()
 
-    selected_data = data_frame[selected_features]
-
-    selected_data.hist(figsize=(10, 6), bins=20)
-    plt.suptitle('Feature Distributions Before Normalization')
+    data_frame[features].hist(figsize=(12, 8), bins=20)
+    plt.suptitle('Feature Distributions Before Preprocessing')
     plt.tight_layout()
     plt.show()
 
-    scaler = MinMaxScaler()
-    normalized_data = scaler.fit_transform(selected_data)
-    normalized_data = pd.DataFrame(normalized_data, columns=selected_features)
+    transformed_data = data_frame[features].apply(lambda x: np.log(x + 1))  # Adding 1 to avoid log(0)
 
-    normalized_data.hist(figsize=(10, 6), bins=20)
-    plt.suptitle('Feature Distributions After Normalization')
+    transformed_data.hist(figsize=(12, 8), bins=20)
+    plt.suptitle('Feature Distributions After Preprocessing')
     plt.tight_layout()
     plt.show()
+
