@@ -20,3 +20,16 @@ if __name__ == "__main__":
     plt.tight_layout()
     plt.show()
 
+    original_skewness = data_frame[features].skew()
+    transformed_skewness = transformed_data.skew()
+
+    plt.figure(figsize=(10, 6))
+    plt.bar(features, original_skewness, color='blue', alpha=0.5, label='Before Preprocessing')
+    plt.bar(features, transformed_skewness, color='orange', alpha=0.5, label='After Preprocessing')
+    plt.xlabel('Features')
+    plt.ylabel('Skewness')
+    plt.title('Skewness Comparison Before and After Preprocessing')
+    plt.xticks(rotation=90)
+    plt.legend()
+    plt.tight_layout()
+    plt.show()
